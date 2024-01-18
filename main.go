@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+// The function `getInput` takes a prompt string and a `bufio.Reader` as input, and returns a trimmed
+// string and an error.
 func getInput(p string,r *bufio.Reader)(string,error){
 	fmt.Print(p)
 
@@ -16,6 +18,7 @@ func getInput(p string,r *bufio.Reader)(string,error){
 	return strings.TrimSpace(input), err
 }
 
+// The function creates a new bill by taking user input for the bill name and returns the created bill.
 func createBill() bill {
 	reader := bufio.NewReader(os.Stdin)
 
@@ -27,6 +30,8 @@ func createBill() bill {
 	return b
 }
 
+// The function `promptOptions` allows the user to choose options to add items, save the bill, or add a
+// tip to a bill.
 func promptOptions(b bill){
 	reader := bufio.NewReader(os.Stdin)
 	opt,_ := getInput("Choose option (a - add item, s - save bill, t - add tip): ",reader)
@@ -69,6 +74,7 @@ func promptOptions(b bill){
 	} 
 }
 
+// The main function creates a bill and prompts options for the user.
 func main() {
 	mybill := createBill()
 
