@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 type bill struct {
@@ -24,7 +25,7 @@ func newBill(name string) bill {
 
 // format the bill
 func (b *bill) format() string {
-	fs := "Bill Breakdown: \n"
+	fs := fmt.Sprintf("Bill Breakdown for (%v) - : \n",strings.ToUpper(b.name))
 	var total float64 = 0
 
 	// list items
@@ -56,10 +57,16 @@ func (b *bill) addItem(name string, price float64) {
 func (b *bill) save() {
 	data := []byte(b.format())
 
-	e := os.Mkdir("bills",0777)
-	if e != nil{
-		panic(e)
+	_, oserr := os.Stat("bills")
+	if os.IsNotExist(oserr){
+		// directory does not exist, so create it
+
+		e := os.Mkdir("bills",0777)
+		if e != nil{
+			panic(e)
+		}
 	}
+
 	err := os.WriteFile("bills/"+b.name+".txt",data,0644)
 
 	if err != nil{
